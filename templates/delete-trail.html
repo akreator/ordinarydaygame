@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+    Are you sure you want to delete your trail {{ trail.title }}?
+    This will also delete {{ trail.events|length + 1}} associated events.
+</div>
+<br>
+<br>
+<table border="0" cellspacing="3" cellpadding="12" align="center">
+    <tr>
+        <td>
+            <form method="POST"><input type="submit" value="Yes" class="submitbutton"></form>
+        </td>
+        <td>
+            <div class="black-link-button"><a href="/trail/{{ trail.url }}">No</a></div>
+        </td>
+    </tr>
+</table>
+{% endblock %}

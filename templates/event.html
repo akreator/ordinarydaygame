@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block bar %}
+<div id="event-bar">
+    <table border="0" cellspacing="10" cellpadding="5" align="center">
+        <td class="event-button">
+            <a href="/user/{{ trail.creator }}">Creator's Profile</a>
+        </td>
+        <td class="event-button">
+            <a href="/trail/{{trail.url}}/save">Save Trail</a>
+        </td>
+        <td class="event-button">
+            <a href="/trail/{{trail.url}}/walktrail?back=true">Back</a>
+        </td>
+        <td class="event-button">
+            <a href="/trail/{{trail.url}}/walktrail?restart=true">Restart</a>
+        </td>
+        {% if event.creator == user.username %}
+        <td class="event-button">
+            <a href="/trail/{{trail.url}}/editevent">Edit this Event</a>
+        </td>
+        {% elif trail.creator == user.username %}
+        <td class="event-button">
+            <a href="/trail/{{ trail.url }}/delete?t={{ event.key.integer_id() }}">Delete this Event</a>
+        </td>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="event">
+    <h2 class="title">
+        {{ event.location }}
+        {% if event.creator != trail.creator %}
+            <div class="content">by <a href="/user/{{ event.creator }}">{{ event.creator }}</a></div>
+        {% endif %}
+        {% if event.edit %}
+            <div class="content errormessage">Edit Pending</div>
+        {% endif %}
+    </h2>
+    <br>
+    <div class="content">
+        {% for line in parse_content(event.content).splitlines() %}
+        {{ line }}<br>
+        {% endfor %}
+    </div>
+    <br>
+    <div class="errormessage" id="event-error">{{error}}</div>
+    <br>
+    <div id="actions">
+        <form method="POST" id="event-form">
+            {% if event.child_events %}
+            {% for e in event.get_child_events() %}
+            {% if e.accepted %}
+            <div class="accepted-event">
+                <input type="radio" name="next_event" value="{{e.key.integer_id()}}">{{ e.action }}
+                {% if e.item_needed %} | <strong> {{e.item_needed}} </strong> {% endif %}
+                {% if e.creator != trail.creator %} by <strong> {{ e.creator }} </strong> {% endif %}
+            </div>
+            {% elif e.creator == user.username%}
+            <div class="user-event">
+                <input type="radio" name="next_event" value="{{e.key.integer_id()}}">{{ e.action }}
+                {% if e.item_needed %} | <strong> {{e.item_needed}} </strong> {% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <input type="radio" name="next_event" value="custom" id="event-custom">Walk Your Own Path
+            <br>
+            <input type="submit" class="submitbutton" value="Act">
+        </form>
+    </div>
+    <br>
+    <br>
+    <div class="title">
+        Inventory:
+    </div>
+    <div id="inventory">
+        {% if inventory %}
+        {% for i in inventory %}
+        <br>
+        {{ i }}
+        <br>
+        {% endfor %}
+        {% else %}
+        <br>
+        Your inventory is empty.
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
+
+{% block scriptcontent %}
+<script src="/js/walktrail.js">
+  getVariables();
+</script>
+{% endblock %}

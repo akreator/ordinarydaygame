@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="title">Sign Up</h2>
+<div id="content">
+    <div class="errormessage">{{ error }}</div>
+    <br>
+    <form method="POST" id="signup-form">
+        <label> Username:
+            <input type="text" name="username" class="input" value="{{username}}">
+        </label>
+        <br>
+        <br>
+        <label> Password:
+            <input type="password" name="password" class="input">
+        </label>
+        <br>
+        <br>
+        <label> Verify Password:
+            <input type="password" name="verify" class="input">
+        </label>
+        <br>
+        <br>
+        <label> E-mail:
+            <input type="text" name="email" class="input" value="{{email}}">
+        </label>
+        <br>
+        <br>
+        <label>What pronouns do you use?
+            <select name="pronouns" id="pronouns" class="input" selected="{{pronouns}}">
+                <option value="she/her/her/hers">she/her</option>
+                <option value="he/him/his/his">he/him</option>
+                <option value="they/them/their/theirs">they/them</option>
+                <!-- <option value="other">other</option> -->
+            </select>
+        </label>
+        <div id="other"></div>
+        <br>
+        <input type="submit" class="submitbutton" value="Create account">
+    </form>
+    <br><br>
+    <div id="login-link">
+        Already have an account? Login <a href="/login">here</a>.
+    </div>
+</div>
+{% endblock %}

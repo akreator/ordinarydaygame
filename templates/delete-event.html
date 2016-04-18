@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+    Are you sure you want to delete the following event?
+    This will also delete all events that branch off of this one.
+</div>
+<br>
+<br>
+<table border="1" cellspacing="3" cellpadding="12" align="center">
+    <tr>
+        <td class="table-data title">
+            Action
+        </td>
+        <td class="table-data title">
+            Location
+        </td>
+        <td class="table-data title">
+            Content
+        </td>
+        <td class="table-data title">
+            Items (Needed/Found)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ e.action }}
+        </td>
+        <td>
+            {{ e.location }}
+        </td>
+        <td>
+            {% for line in parse_content(e.content[:1000]).splitlines() %}
+            {{ line }}<br>
+            {% endfor %}
+        </td>
+        <td>
+            {{ e.item_needed }}/{{ e.item_found }}
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0" cellspacing="3" cellpadding="12" align="center">
+    <tr>
+        <td>
+            <form method="POST"><input type="submit" value="Yes" class="submitbutton"></form>
+        </td>
+        <td>
+            <div class="black-link-button"><a href="/trail/{{ e.trail.get().url }}/walktrail">No</a></div>
+        </td>
+    </tr>
+</table>
+{% endblock %}

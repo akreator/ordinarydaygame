@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="profile username title">
+    {{ profile_user.username }}
+    <div class="content">
+        Member since {{ profile_user.joined }}.
+    </div>
+</h1>
+<br>
+<div class="title">Statistics</div>
+<br>
+<table border="1" cellspacing="3" cellpadding="20" align="center">
+    <tr>
+        <td>
+            <div class="profile title">Trails Created</div>
+        </td>
+        <td>
+            <div class="profile title">Trails Contributed</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {% if profile_user.get_trails_created() %}
+            {% for t in profile_user.get_trails_created() %}
+            <div class="profile trail-created table-data">
+                <a href="/trail/{{t.url}}">{{ t.title }}</a> | Visits: {{ t.users_visited|length }}
+                        <br>
+            </div>
+            {% endfor %}
+            {% else %}
+            {{ profile_user.username }} has not created any trails.
+            {% endif %}
+        </td>
+        <td>
+            {% if profile_user.get_trails_contributed() %}
+            {% for t in profile_user.get_trails_contributed() %}
+            <div class="profile trail-created table-data">
+                <a href="/trail/{{t.url}}">{{ t.title }}</a> | Visits: {{ t.users_visited|length }}
+                        <br>
+            </div>
+            {% endfor %}
+            {% else %}
+            {{ profile_user.username }} has not contributed to any trails.
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td class="table-data">
+            <div class="title">Total Visits: {{ profile_user.get_total_visits() }}</div>
+        </td>
+        <td class="table-data">
+            <div class="title">Total Events Created: {{ profile_user.events_created|length }}</div>
+        </td>
+    </tr>
+</table>
+
+<div id="profile saved-trails">
+    <br>
+    <br>
+    <div class="title">Saved Trails</div>
+    <br>
+    <div>
+        {% if profile_user.get_trails_saved() %}
+        {% for t in profile_user.get_trails_saved()[:5] %}
+        <a href="/trail/{{t.url}}">{{ t.title }}</a>, by <a href="/user/{{t.creator}}">{{ t.creator }}</a>.
+        <br>
+        {% endfor %}
+        {% else %}
+        {{ profile_user.username }} has not saved any trails. <br>
+        Explore the trails <a href="/explore">here</a>.
+        {% endif %}
+    </div>
+</div>
+
+{% if profile_user.introduction or profile_user.gender or profile_user.hobbies or profile_user.country or profile_user.website %}
+<div class="profile" id="personal-details">
+
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> New Trail </h1>
+<br>
+<div class="errormessage"> {{ error }} </div>
+<div class="errormessage">
+    To reference the user's name, include &lt;name&gt;.
+    <br>
+    Use &lt;they&gt;, &lt;them&gt;, &lt;their&gt;, and &lt;theirs&gt; to access the user's corresponding pronouns.
+</div>
+<form method="post">
+    <h4>Trail Title and Description</h4>
+    <br>
+    <input type="text" class="input" name="trail_title" value="{{trail_title}}" placeholder="Trail Title"/>
+    <br>
+    <br>
+    <div class="textarea">
+        <textarea rows="20" cols="100" class="textarea" name="trail_description">{{trail_description}}</textarea>
+    </div>
+    <br>
+    <br>
+    <input type="text" class="input" name="trail_tags" value="{{trail_tags}}" placeholder="tag1, tag2"/>
+    <br>
+    <br>
+    <h4>First Event</h4>
+    <br>
+    <input type="text" class="input" name="location" value="{{location}}" placeholder="Location"/>
+    <br>
+    <br>
+    <input type="text" class="input" name="action" value="{{action}}" placeholder="Action">
+    <br>
+    <br>
+    <div class="textarea">
+        <textarea rows="20" cols="100" class="textarea" name="content">{{content}}</textarea>
+    </div>
+    <input type="submit" class="submitbutton" value="Forge Trail"/>
+    <!-- VALIDATE WITH jAVASCRIPT -->
+</form>
+{% endblock %}

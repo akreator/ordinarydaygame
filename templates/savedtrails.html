@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ user.username }}'s Saved Trails</h1>
+
+<div class="errormessage">
+    {{ error }}
+</div>
+
+{% if user.get_trails_saved() %}
+<table border="0" cellspacing="10" cellpadding="5" align="center">
+    {% for t in user.get_trails_saved() %}
+    <tr>
+        <td>
+            <a href="/trail/{{t.url}}">{{ t.title }}</a>
+            by <a href="/user/{{t.creator}}">{{ t.creator }}</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ parse_content(t.description[:100]) }}...
+        </td>
+    </tr>
+    <tr>
+        <td class="table-data">
+            Tags:
+            {% if t.tags %}
+            {% for tag in t.tags %}
+            <a href="/explore?tags={{ escape(tag) }}">{{ tag }}</a>,
+            {% endfor %}
+            {% else %}
+            This trail has no tags.
+            {% endif %}
+        </td>
+        <td>
+            Upvotes: {{ t.vote_count }} <br>
+            Visits: {{ t.users_visited|length }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<div>You do not have any saved trails.</div>
+{% endif %}
+
+{% endblock %}

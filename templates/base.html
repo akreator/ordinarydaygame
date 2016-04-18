@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script> -->
+    {% block headerinfo %}
+    {% endblock %}
+    <link href="/css/style.css" rel="stylesheet"/>
+    <title>An Ordinary Day</title>
+</head>
+
+<body>
+<div id="banner-wrapper">
+    <a href="/"><h1 id="page-title">An Ordinary Day</h1></a>
+    <p id="subtitle">Walk Your Own Path</p>
+    <div class="base-button">
+        <a href="/about">About</a>
+    </div>
+
+    <div class="base-button">
+        {% if user %}
+        <a href="/logout">Logout</a>
+        {% else %}
+        <a href="/login">Login</a>
+        {% endif %}
+    </div>
+
+    <div class="base-button">
+        {% if user %}
+        <a href="/user/{{ user.username }}">Your Profile</a>
+        {% else %}
+        <a href="/signup">Sign Up</a>
+        {% endif %}
+    </div>
+
+    <div class="base-button">
+        <a href="/explore">Explore</a>
+    </div>
+
+    <div class="base-button">
+        <a href="/newtrail">New Trail</a>
+    </div>
+</div>
+
+{% block bar %}
+{% endblock %}
+
+<div class="changing-content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+<div class="footer">
+    <a href="/contact"> Contact </a>
+    <a href="/feedback"> Feedback </a>
+</div>
+
+{% block scriptcontent %}
+{% endblock %}
+</body>
+
+</html>

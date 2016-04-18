@@ -1,0 +1,202 @@
+/* General */
+html { /* from http://mystrd.at/modern-clean-css-sticky-footer/ */
+  position: relative;
+  min-height: 100%;
+}
+a {
+  text-decoration: none;
+  color: red;
+}
+a:hover {
+  color: black;
+}
+body {
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
+  color: black;
+  zoom: 90%;
+  margin: 0 0 50px; /* from http://mystrd.at/modern-clean-css-sticky-footer/ */
+}
+.changing-content {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+.content {
+  margin-left: 10%;
+  margin-right: 10%;
+  word-wrap: break-word;
+  font-family: courier;
+  font-size: 17px;
+  line-height: 120%;
+}
+.errormessage {
+  color : red;
+}
+.submitbutton {
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 7px 12px;
+  background: black;
+  color: white;
+  border-radius: 7px;
+  border: solid 1px #20538D;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+}
+.submitbutton:hover {
+  color: red;
+}
+.textarea {
+  margin-left: 10%;
+  margin-right: 10%;
+  font-size: 14px;
+}
+.title {
+  font-weight: bold;
+  font-size: 40;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.table-data {
+  vertical-align: top;
+  text-align: left;
+}
+.black-link-button a {
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 7px 12px;
+  background: black;
+  color: white;
+  border-radius: 7px;
+  border: solid 1px #20538D;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  display: inline-block;
+  font-size: 13px;
+}
+.black-link-button a:hover {
+  color: red;
+}
+
+
+/* Base */
+.base-button {
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 7px 12px;
+  background: white;
+  color: black;
+  border-radius: 7px;
+  border: solid 1px #20538D;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  display: inline-block;
+}
+.base-button a {
+  color: black;
+  font-size: 14px;
+}
+.base-button a:hover {
+  color: red;
+}
+.footer a {
+  text-decoration: none;
+  text-align: center;
+  padding: 20px;
+  word-wrap: normal;
+  display: inline-block;
+}
+.footer a:hover {
+  color: white;
+}
+.footer { /* from http://mystrd.at/modern-clean-css-sticky-footer/ */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  background-color: black;
+  text-align:center;
+}
+#banner-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: black;
+  color: white;
+}
+#page-title {
+  font-size:50px;
+  color:white;
+}
+#subtitle {
+  font-weight: 700;
+  font-family:courier;
+  color:white;
+  margin-top:-25px;
+}
+
+/* Welcome page */
+.table-header {
+  text-align: left;
+}
+#welcome-inventory {
+  vertical-align: bottom;
+}
+
+/* Event */
+.event-button a{
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 7px 12px;
+  background: white;
+  color: black;
+  margin: 10px;
+  width: 5em;
+  text-decoration: none;
+  font-size: 14px;
+}
+.eventbutton a:hover {
+  color: red;
+}
+.user-event {
+  color: red;
+}
+#event-bar {
+  border-color: black;
+  border-style: solid;
+  border-width: 5px 0px 5px 0px;
+  margin: 15px 0px 15px 0px;
+}
+#event {
+  margin: 10px;
+  font-family: Courier;
+  font-size: 17px;
+  font-weight: 500;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+#actions {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 175%;
+}
+#inventory {
+  /*nothing yet! */
+}
+
+/* New page */
+.input {
+  font-family: "Lucida Console", Monaco, monospace;
+  padding-left: 5px;
+  padding-right: 5px;
+  border:1px solid #456879;
+  border-radius:10px;
+  height: 22px;
+  width: 230px;
+}
+
+/* Login */
+#signup-form {
+}
+
+/* feedback page */
+#feedback-form {
+  font-family:courier;
+}

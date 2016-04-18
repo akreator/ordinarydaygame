@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="title">{{ trail.title }}</h2>
+<br>
+<div class="content">
+    {% for line in parse_content(trail.description).splitlines() %}
+    {{ line }}<br>
+    {% endfor %}
+</div>
+<br>
+<div class="black-link-button">
+    <a href="/trail/{{ trail.url }}/walktrail">{{ trail.first_event.get().action }}</a>
+</div>
+<br>
+<br>
+<div class="tags">
+    <strong>Tags:</strong>
+    {% if trail.tags %}
+    {% for t in trail.tags %}
+    <a href="/explore?tags={{ escape(t) }}">{{ t }}</a>,
+    {% endfor %}
+    {% else %}
+    This trail has no tags.
+    {% endif %}
+</div>
+<br>
+<div class="errormessage">{{error}}</div>
+<br>
+{% if user is defined and user.username == trail.creator %}
+<div class="black-link-button">
+    <a href="/trail/{{ trail.url }}/edit">Edit description and tags</a>
+</div>
+<br>
+<br>
+<div id="user-events">
+    <form method="POST">
+        <div class="title">User Created Events:</div>
+        {% if trail.get_unaccepted_events() %}
+        <br>
+        <table border="1" cellspacing="3" cellpadding="12" align="center">
+            <tr>
+                <td class="table-data title">Accept</td>
+                <td class="table-data title">Creator</td>
+                <td class="table-data title">Action</td>
+                <td class="table-data title">Location</td>
+                <td class="table-data title">Content</td>
+                <td class="table-data title">Items (Needed/Found)</td>
+            </tr>
+            {% for e in trail.get_unaccepted_events() %}
+            <tr>
+                <td class="table-data" class="accept-box">
+                    <input type="checkbox" name="accept_events" value="{{ e.key.integer_id() }}">
+                </td>
+                <td class="table-data">
+                    <a href="/users/{{ e.creator }}">{{ e.creator }}</a>
+                </td>
+                <td>{{ e.action }}</td>
+                <td>{{ e.location }}</td>
+                <td>
+                    {% for line in parse_content(e.content[:1000]).splitlines() %}
+                    {{ line }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ e.item_needed }}/{{ e.item_found }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <br>
+        <div>There are currently no unaccepted events.</div>
+        {% endif %}
+        <br>
+        <div class="title">Pending Edits:</div> <br>
+        {% if edits and events %}
+        <table border="1" cellspacing="3" cellpadding="12" align="center">
+            <tr>
+                <td class="table-data title">Accept</td>
+                <td class="table-data title">Creator</td>
+                <td class="table-data title">Before/After</td>
+                <td class="table-data title">Action</td>
+                <td class="table-data title">Location</td>
+                <td class="table-data title">Content</td>
+                <td class="table-data title">Items (Found/Needed)</td>
+            </tr>
+            {% for x in range(events|length) %}
+            <tr>
+                <td class="table-data" class="accept-box" rowspan="2">
+                    <input type="checkbox" name="accept_edits" value="{{ edits[x].key.integer_id() }}">
+                </td>
+                <td class="table-data" rowspan="2">
+                    <a href="/users/{{ events[x].creator }}">{{ events[x].creator }}</a>
+                </td>
+                <td>Before</td>
+                <td>{{ events[x].action }}</td>
+                <td>{{ events[x].location }}</td>
+                <td>
+                    {% for line in parse_content(events[x].content[:1000]).splitlines() %}
+                    {{ line }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ events[x].item_needed }}/{{ events[x].item_found }}</td>
+            </tr>
+            <tr>
+                <td>After</td>
+                <td>{{ edits[x].action }}</td>
+                <td>{{ edits[x].location }}</td>
+                <td>
+                    {% for line in parse_content(edits[x].content[:1000]).splitlines() %}
+                    {{ line }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ edits[x].item_needed }}/{{ edits[x].item_found }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <br>
+        <div>There are no pending edits.</div>
+        {% endif %}
+        <br>
+        <br>
+        {% if trail.get_unaccepted_events() or edits %}
+        <input type="submit" class="submitbutton" value="Accept events and/or Edits">
+        {% endif %}
+    </form>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="title">
+    {% if user %}
+        Welcome, {{ user.username }}.
+    {% endif %}
+</h2>
+
+<div id="stats">
+    <table border="0" cellspacing="10" cellpadding="5" align="center">
+        <tr>
+            <td colspan="2">
+                <div class="title table-header">News:</div>
+                <div class="errormessage table-data">
+                    THIS SITE IS STILL IN BETA.  PLEASE REPORT ALL ERRORS AND SUGGESTIONS TO akintisch@gmail.com <br>
+                    Javascript is currently unavailable.  A list of requirements for inputs will be posted shortly. <br>
+                    The site was built for Google Chrome, and is not optimized for mobile.  Please use a computer for
+                    the full experience.
+                </div>
+                {% if user and user.get_unaccepted_trails() %}
+                <br>
+                <div class="updates table-data">
+                    These trails have non-public events: <br>
+                    {% for t in user.get_unaccepted_trails() %}
+                    <a href="/trail/{{ t.url }}">{{ t.title }}</a> ({{ t.get_unaccepted_events()|length }})<br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if user and user.get_edited_trails() %}
+                <br>
+                <div class="updates table-data">
+                    These trails have pending edits: <br>
+                    {% for t in user.get_edited_trails() %}
+                    <a href="/trail/{{ t.url }}">{{ t.title }}</a> ({{ t.get_edited_events()[0]|length }})<br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td class="table-data">
+                <div class="title table-header">Top Trails:</div>
+                <div>
+                {% for t in top_trails[:5] %}
+                    <a href="/trail/{{t.url}}">{{ t.title }}</a>, by <a href="/user/{{t.creator}}">{{ t.creator }}.</a>
+                    <br>
+                {% endfor %}
+                </div>
+            </td>
+            <td class="table-data">
+                <div class="title table-header">Newest Trails:</div>
+                <div>
+                {% for t in newest_trails[:5] %}
+                    <a href="/trail/{{t.url}}">{{ t.title }}</a>, by <a href="/user/{{t.creator}}">{{ t.creator }}.</a>
+                    <br>
+                {% endfor %}
+                </div>
+            </td>
+        </tr>
+        {% if user %}
+        <tr>
+            <td class="table-data">
+                <div class="title table-header">Your Trails:</div>
+                <div>
+                    {% if user.get_trails_created() %}
+                    {% for t in user.get_trails_created()[:5] %}
+                        <a href="/trail/{{t.url}}">{{ t.title }}</a> | Visits: {{ t.users_visited|length }}
+                        <br>
+                    {% endfor %}
+                    {% else %}
+                    You have not created any trails.<br>
+                    Make your own <a href="/newtrail">here</a>.
+                    {% endif %}
+                </div>
+            </td>
+            <td class="table-data">
+                <div class="title table-header">Saved Trails:</div>
+                <div>
+                    {% if user.get_trails_saved() %}
+                    {% for t in user.get_trails_saved()[:5] %}
+                        <a href="/trail/{{t.url}}">{{ t.title }}</a>, by <a href="/user/{{t.creator}}">{{ t.creator }}.</a>
+                        <br>
+                    {% endfor %}
+                    {% else %}
+                    You have not saved any trails. <br>
+                    Explore the trails <a href="explore">here</a>.
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

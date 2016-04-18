@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Explore</h1>
+
+<form method="GET">
+    <input type="text" name="tags" class="input" placeholder="Search for a tag">
+    <select name="sort" class="input">
+        <option value="altitle">Sort by Title</option>
+        <option value="nvisitors">Number of visitors (high to low)</option>
+        <option value="rnvisitors">Number of visitors (low to high)</option>
+        <option value="date">Date Created (Old to New)</option>
+        <option value="rdate">Date Created (New to Old)</option>
+    </select>
+    <input type="submit" value="Search" class="submitbutton">
+</form>
+<br>
+<br>
+
+<div class="errormessage">
+    {{ error }}
+</div>
+
+<table border="0" cellspacing="10" cellpadding="5" align="center">
+    {% for t in trails %}
+    <tr>
+        <td>
+            <div class="title"><a href="/trail/{{t.url}}">{{ t.title }}</a></div>
+            by <a href="/user/{{t.creator}}">{{ t.creator }}</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ parse_content(t.description[:100]) }}...
+        </td>
+    </tr>
+    <tr>
+        <td class="table-data">
+            Tags:
+            {% if t.tags %}
+            {% for tag in t.tags %}
+            <a href="/explore?tags={{ escape(tag) }}">{{ tag }}</a>,
+            {% endfor %}
+            {% else %}
+            This trail has no tags.
+            {% endif %}
+        </td>
+        <td>
+            Visits: {{ t.users_visited|length }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
